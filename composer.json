@@ -1,0 +1,48 @@
+{
+    "name": "tbmatuka/editorjs-bundle",
+    "description": "Symfony bundle for Editor.js",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tin Benjamin Matuka",
+            "homepage": "https://tbmatuka.com/"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Tbmatuka\\EditorjsBundle\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tbmatuka\\EditorjsBundle\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^7.1",
+        "ext-json": "*",
+        "codex-team/editor.js": "^2.0",
+        "symfony/asset": "^3.4 || ^4.0",
+        "symfony/config": "^3.4 || ^4.0",
+        "symfony/dependency-injection": "^3.4 || ^4.0",
+        "symfony/form": "^3.4 || ^4.0",
+        "symfony/framework-bundle": "^3.4 || ^4.0",
+        "symfony/http-foundation": "^3.4 || ^4.0",
+        "symfony/http-kernel": "^3.4 || ^4.0",
+        "symfony/options-resolver": "^3.4 || ^4.0",
+        "symfony/property-access": "^3.4 || ^4.0",
+        "symfony/routing": "^3.4 || ^4.0",
+        "symfony/twig-bundle": "^3.4 || ^4.0",
+        "twig/twig": "^2.0"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.14",
+        "symfony/framework-bundle": "^3.4 || ^4.0",
+        "symfony/phpunit-bridge": "^3.4 || ^4.1",
+        "symfony/twig-bundle": "^3.4 || ^4.0",
+        "twig/twig": "^1.35 || ^2.0",
+        "symfony/web-link": "^3.4 || ^4.0",
+        "fig/link-util": "^1.0"
+    }
+}
