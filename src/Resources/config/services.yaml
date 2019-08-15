@@ -1,0 +1,23 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Tbmatuka\EditorjsBundle\Editor\ToolConfigCollection:
+    public: true
+
+  editorjs.tool_config_collection:
+    alias: Tbmatuka\EditorjsBundle\Editor\ToolConfigCollection
+
+  Tbmatuka\EditorjsBundle\Editor\EditorConfigCollection:
+    public: true
+
+  editorjs.config_collection:
+    alias: Tbmatuka\EditorjsBundle\Editor\EditorConfigCollection
+
+  Tbmatuka\EditorjsBundle\Twig\EditorjsExtension:
+    public: true
+
+  editorjs.twig_extension:
+    alias: Tbmatuka\EditorjsBundle\Twig\EditorjsExtension
