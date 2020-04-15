@@ -4,6 +4,9 @@ namespace Tbmatuka\EditorjsBundle\Editor;
 
 class EditorConfig
 {
+    /**
+     * @var string
+     */
     private $name = '';
 
     /**
@@ -32,7 +35,7 @@ class EditorConfig
     private $hideToolbar;
 
     /**
-     * @var Tool[]
+     * @var ToolConfig[]
      */
     private $tools = [];
 
@@ -51,8 +54,14 @@ class EditorConfig
      */
     private $onChange;
 
+    /**
+     * @var string|null
+     */
+    private $logLevel;
+
     public function __construct(
         string $name,
+        ToolConfigCollection $toolConfigCollection,
         ?bool $autofocus = null,
         ?string $initialBlock = null,
         ?string $placeholder = null,
@@ -61,9 +70,9 @@ class EditorConfig
         ?array $tools = [],
         ?int $minHeight = null,
         ?string $onReady = null,
-        ?string $onChange = null
-    )
-    {
+        ?string $onChange = null,
+        ?string $logLevel = null
+    ) {
         $this->name = $name;
         $this->autofocus = $autofocus;
         $this->initialBlock = $initialBlock;
@@ -77,17 +86,18 @@ class EditorConfig
 
         if (is_array($tools)) {
             foreach ($tools as $tool) {
-                if (!$tool instanceof Tool) {
-                    throw new \InvalidArgumentException('Not an instance of Tool');
+                if (!$toolConfigCollection->hasConfig($tool)) {
+                    throw new \InvalidArgumentException(sprintf('Config for tool "%s" does not exits.', $tool));
                 }
-            }
 
-            $this->tools = $tools;
+                $this->tools[$tool] = $toolConfigCollection->getConfig($tool);
+            }
         }
 
         $this->minHeight = $minHeight;
         $this->onReady = $onReady;
         $this->onChange = $onChange;
+        $this->logLevel = $logLevel;
     }
 
     public function getName(): string
@@ -121,7 +131,7 @@ class EditorConfig
     }
 
     /**
-     * @return Tool[]
+     * @return ToolConfig[]
      */
     public function getTools(): array
     {
@@ -141,5 +151,10 @@ class EditorConfig
     public function getOnChange(): ?string
     {
         return $this->onChange;
+    }
+
+    public function getLogLevel(): ?string
+    {
+        return $this->logLevel;
     }
 }

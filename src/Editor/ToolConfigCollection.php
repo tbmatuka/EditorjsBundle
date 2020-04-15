@@ -9,9 +9,14 @@ class ToolConfigCollection
      */
     private $toolConfigs = [];
 
-    public function __construct(array $toolConfigs)
+    /**
+     * @param ToolConfig[] $toolConfigs
+     */
+    public function __construct(iterable $toolConfigs = [])
     {
-        $this->toolConfigs = $toolConfigs;
+        foreach ($toolConfigs as $toolConfig) {
+            $this->toolConfigs[$toolConfig->getName()] = $toolConfig;
+        }
     }
 
     public function setConfig(ToolConfig $toolConfig): void

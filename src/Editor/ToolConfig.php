@@ -4,8 +4,14 @@ namespace Tbmatuka\EditorjsBundle\Editor;
 
 class ToolConfig
 {
+    /**
+     * @var string
+     */
     private $name = '';
 
+    /**
+     * @var string
+     */
     private $className = '';
 
     /**
@@ -28,8 +34,14 @@ class ToolConfig
      */
     private $toolbox;
 
+    /**
+     * @var array
+     */
     private $config = [];
 
+    /**
+     * @param bool|array|null|mixed $inlineToolbar
+     */
     public function __construct(
         string $name,
         string $className,

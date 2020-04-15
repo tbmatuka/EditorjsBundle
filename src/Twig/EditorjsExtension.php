@@ -2,24 +2,31 @@
 
 namespace Tbmatuka\EditorjsBundle\Twig;
 
+use Tbmatuka\EditorjsBundle\Editor\Editor;
 use Tbmatuka\EditorjsBundle\Editor\EditorConfig;
 use Tbmatuka\EditorjsBundle\Editor\EditorConfigCollection;
-use Tbmatuka\EditorjsBundle\Editor\Editor;
+use Tbmatuka\EditorjsBundle\Form\EditorjsTransformer;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class EditorjsExtension extends AbstractExtension
 {
-    private $editorConfigCollection;
+    /**
+     * @var EditorConfigCollection
+     */
+    protected $editorConfigCollection;
 
-    public function __construct(EditorConfigCollection $editorConfigCollection)
-    {
+    /**
+     * @var EditorjsTransformer
+     */
+    protected $editorjsTransformer;
+
+    public function __construct(
+        EditorConfigCollection $editorConfigCollection,
+        EditorjsTransformer $editorjsTransformer
+    ) {
         $this->editorConfigCollection = $editorConfigCollection;
-
-        $this->editorConfigCollection->setConfig(new EditorConfig(
-            'default',
-            true
-        ));
+        $this->editorjsTransformer = $editorjsTransformer;
     }
 
     /**
@@ -33,24 +40,45 @@ class EditorjsExtension extends AbstractExtension
         ];
     }
 
-    public function editorjs(string $handlerName, string $configName, array $data = []): Editor
+    /**
+     * @param string|EditorConfig $config
+     * @param string|array|null   $data
+     */
+    public function editorjs(string $holder, $config, $data = []): Editor
     {
-        $config = $this->editorConfigCollection->getConfig($configName);
+        if (!$config instanceof EditorConfig) {
+            $config = $this->editorConfigCollection->getConfig((string) $config);
+        }
+
+        if (is_array($data)) {
+            $dataArray = $data;
+        } else {
+            if (is_string($data)) {
+                $dataArray = $this->editorjsTransformer->reverseTransform($data);
+            } else {
+                $dataArray = [];
+            }
+        }
 
         return new Editor(
-            $handlerName,
+            $holder,
             $config,
-            $data
+            $dataArray
         );
     }
 
     public function editorjsSerialize(Editor $editor): string
     {
-        $editorArray = (array)$editor;
+        $editorArray = (array) $editor;
 
         $cleanEditorArray = $this->cleanArray($editorArray);
+        foreach ($cleanEditorArray as $key => $value) {
+            if ($key !== 'config') {
+                $cleanEditorArray['config'][$key] = $value;
+            }
+        }
 
-        return json_encode($cleanEditorArray);
+        return (string) json_encode($cleanEditorArray['config']);
     }
 
     private function cleanArray(array $array): array
@@ -58,8 +86,12 @@ class EditorjsExtension extends AbstractExtension
         $cleanArray = [];
 
         foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                $value = $this->cleanArray($value);
+            }
+
             if (is_object($value)) {
-                $value = $this->cleanArray((array)$value);
+                $value = $this->cleanArray((array) $value);
             }
 
             if (

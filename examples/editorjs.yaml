@@ -1,0 +1,32 @@
+editorjs:
+  configs:
+    default:
+      initialBlock: paragraph
+      logLevel: ERROR
+      placeholder: 'Editor'
+      tools:
+        - header
+    admin:
+      tools:
+        - header
+        - list
+  tools:
+    header:
+      url: ~
+      className: Header
+      shortcut: ~
+      inlineToolbar: ~
+      config:
+        something: true
+      toolbox:
+        title: ~
+        icon: ~
+    list:
+      url: ~
+      className: List
+      config:
+        something: true
+      inlineToolbar: true
+      toolbox:
+        title: ~
+        icon: ~

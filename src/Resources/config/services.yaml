@@ -1,23 +1,31 @@
 services:
-  _defaults:
-    autowire: true
-    autoconfigure: true
-    public: false
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
 
-  Tbmatuka\EditorjsBundle\Editor\ToolConfigCollection:
-    public: true
+    Tbmatuka\EditorjsBundle\Editor\ToolConfigCollection:
+        public: true
+        arguments: [!tagged editorjs.tool_config]
 
-  editorjs.tool_config_collection:
-    alias: Tbmatuka\EditorjsBundle\Editor\ToolConfigCollection
+    editorjs.tool_config_collection:
+        alias: Tbmatuka\EditorjsBundle\Editor\ToolConfigCollection
 
-  Tbmatuka\EditorjsBundle\Editor\EditorConfigCollection:
-    public: true
+    Tbmatuka\EditorjsBundle\Editor\EditorConfigCollection:
+        public: true
+        arguments: [!tagged editorjs.editor_config]
 
-  editorjs.config_collection:
-    alias: Tbmatuka\EditorjsBundle\Editor\EditorConfigCollection
+    editorjs.config_collection:
+        alias: Tbmatuka\EditorjsBundle\Editor\EditorConfigCollection
 
-  Tbmatuka\EditorjsBundle\Twig\EditorjsExtension:
-    public: true
+    Tbmatuka\EditorjsBundle\Twig\EditorjsExtension:
+        public: true
 
-  editorjs.twig_extension:
-    alias: Tbmatuka\EditorjsBundle\Twig\EditorjsExtension
+    editorjs.twig_extension:
+        alias: Tbmatuka\EditorjsBundle\Twig\EditorjsExtension
+
+    Tbmatuka\EditorjsBundle\Form\EditorjsTransformer:
+        public: true
+
+    Tbmatuka\EditorjsBundle\Form\EditorjsType:
+        public: true

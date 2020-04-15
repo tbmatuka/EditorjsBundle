@@ -3,29 +3,32 @@
 namespace Tbmatuka\EditorjsBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\Compiler\ServiceLocatorTagPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Tbmatuka\EditorjsBundle\Editor\EditorConfig;
-use Tbmatuka\EditorjsBundle\Editor\EditorConfigCollection;
 use Tbmatuka\EditorjsBundle\Editor\ToolConfig;
 use Tbmatuka\EditorjsBundle\Editor\ToolConfigCollection;
 
 class TbmatukaEditorjsExtension extends Extension
 {
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new YamlFileLoader($container, new FileLocator(\dirname(__DIR__).'/Resources/config'));
         $loader->load('services.yaml');
 
         $configuration = $this->getConfiguration($configs, $container);
+
+        if (!$configuration) {
+            throw new \RuntimeException('Unable to find Configuration class');
+        }
+
         $config = $this->processConfiguration($configuration, $configs);
 
         if (isset($config['tools'])) {
-            $factories = [];
+            $toolReferences = [];
 
             $argumentNames = [
                 'className',
@@ -52,13 +55,51 @@ class TbmatukaEditorjsExtension extends Extension
                 }
 
                 $definition = new Definition(ToolConfig::class, $arguments);
-                $definition->addTag('kernel.reset', ['method'=>'reset']);
+                $definition->addTag('editorjs.tool_config');
                 $container->setDefinition($toolServiceId, $definition);
-                $factories[$toolName] = new Reference($toolServiceId);
+                $toolReferences[$toolName] = new Reference($toolServiceId);
             }
+        }
 
-            $container->getDefinition(ToolConfigCollection::class)
-                ->setArgument(0, ServiceLocatorTagPass::register($container, $factories));
+        if (isset($config['configs'])) {
+            $configReferences = [];
+
+            $argumentNames = [
+                'autofocus',
+                'initialBlock',
+                'placeholder',
+                'sanitizer',
+                'hideToolbar',
+                'tools',
+                'minHeight',
+                'onReady',
+                'onChange',
+                'logLevel',
+            ];
+
+            foreach ($config['configs'] as $configName => $configConfig) {
+                $toolConfigCollection = new Reference(ToolConfigCollection::class);
+
+                $configServiceId = $this->getConfigServiceId($configName);
+
+                $arguments = [
+                    $configName,
+                    $toolConfigCollection,
+                ];
+
+                foreach ($argumentNames as $argumentName) {
+                    if (isset($configConfig[$argumentName])) {
+                        $arguments[] = $configConfig[$argumentName];
+                    } else {
+                        $arguments[] = null;
+                    }
+                }
+
+                $definition = new Definition(EditorConfig::class, $arguments);
+                $definition->addTag('editorjs.editor_config');
+                $container->setDefinition($configServiceId, $definition);
+                $configReferences[$configName] = new Reference($configServiceId);
+            }
         }
     }
 

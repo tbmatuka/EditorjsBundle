@@ -2,7 +2,6 @@
 
 namespace Tbmatuka\EditorjsBundle\DependencyInjection;
 
-use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -11,9 +10,8 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder('editorjs');
-        $rootNode = $treeBuilder->getRootNode();
 
-        $rootNode
+        $treeBuilder->getRootNode()
             ->children()
                 ->arrayNode('tools')
                     ->normalizeKeys(false)
@@ -58,11 +56,9 @@ class Configuration implements ConfigurationInterface
 
     private function createToolNode()
     {
-
     }
 
     private function createConfigNode()
     {
-
     }
 }

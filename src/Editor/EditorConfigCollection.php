@@ -11,9 +11,11 @@ class EditorConfigCollection
      */
     private $editorConfigs = [];
 
-    public function __construct(array $editorConfigs = [])
+    public function __construct(iterable $editorConfigs)
     {
-        $this->editorConfigs = $editorConfigs;
+        foreach ($editorConfigs as $editorConfig) {
+            $this->editorConfigs[$editorConfig->getName()] = $editorConfig;
+        }
     }
 
     public function setConfig(EditorConfig $editorConfig): void
@@ -35,7 +37,7 @@ class EditorConfigCollection
     }
 
     /**
-     * @return Config[]
+     * @return EditorConfig[]
      */
     public function getAllEditorConfigs(): array
     {

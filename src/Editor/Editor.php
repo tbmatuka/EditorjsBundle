@@ -4,22 +4,39 @@ namespace Tbmatuka\EditorjsBundle\Editor;
 
 class Editor
 {
+    /**
+     * @var string
+     */
     private $holder = '';
 
     /**
-     * @var Config|null
+     * @var EditorConfig|null
      */
     private $config;
 
+    /**
+     * @var ToolConfig[]
+     */
+    private $tools = [];
+
+    /**
+     * @var array
+     */
     private $data = [];
 
     public function __construct(
-        $holder = '',
-        $config = null,
-        $data = []
+        string $holder = '',
+        ?EditorConfig $config = null,
+        array $data = []
     ) {
         $this->holder = $holder;
+
+        if (!$config) {
+            $config = new EditorConfig('', new ToolConfigCollection());
+        }
         $this->config = $config;
+        $this->tools = $config->getTools();
+
         $this->data = $data;
     }
 
@@ -35,12 +52,12 @@ class Editor
         return $this;
     }
 
-    public function getConfig(): ?Config
+    public function getConfig(): ?EditorConfig
     {
         return $this->config;
     }
 
-    public function setConfig(Config $config): Editor
+    public function setConfig(EditorConfig $config): Editor
     {
         $this->config = $config;
 

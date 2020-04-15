@@ -1,6 +1,7 @@
 {
     "name": "tbmatuka/editorjs-bundle",
     "description": "Symfony bundle for Editor.js",
+    "homepage": "https://github.com/tbmatuka/EditorjsBundle",
     "type": "symfony-bundle",
     "license": "MIT",
     "authors": [
@@ -9,18 +10,17 @@
             "homepage": "https://tbmatuka.com/"
         }
     ],
+    "support": {
+        "issues": "https://github.com/tbmatuka/EditorjsBundle/issues",
+        "source": "https://github.com/tbmatuka/EditorjsBundle"
+    },
     "autoload": {
         "psr-4": {
             "Tbmatuka\\EditorjsBundle\\": "src"
         }
     },
-    "autoload-dev": {
-        "psr-4": {
-            "Tbmatuka\\EditorjsBundle\\Tests\\": "tests/"
-        }
-    },
     "require": {
-        "php": "^7.1",
+        "php": "^7.2",
         "ext-json": "*",
         "codex-team/editor.js": "^2.0",
         "symfony/asset": "^3.4 || ^4.0",
@@ -44,5 +44,9 @@
         "twig/twig": "^1.35 || ^2.0",
         "symfony/web-link": "^3.4 || ^4.0",
         "fig/link-util": "^1.0"
+    },
+    "scripts": {
+        "cs-fixer": "vendor/bin/php-cs-fixer fix -v --dry-run",
+        "cs-fixer-fix": "vendor/bin/php-cs-fixer fix -v"
     }
 }

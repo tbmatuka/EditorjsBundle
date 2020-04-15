@@ -1,0 +1,19 @@
+# top-most EditorConfig file
+root = true
+
+[*]
+charset = utf-8
+trim_trailing_whitespace = true
+# Unix-style newlines with a newline ending every file
+end_of_line = lf
+insert_final_newline = true
+
+# 4 space indentation
+[*.php,*.yml,*.yaml]
+indent_style = space
+indent_size = 4
+
+# 2 space indentation
+[*.twig,*.js,*.scss,*.mjml]
+indent_style = space
+indent_size = 2
