@@ -22,8 +22,6 @@
     "require": {
         "php": "^7.2",
         "ext-json": "*",
-        "codex-team/editor.js": "^2.0",
-        "symfony/asset": "^3.4 || ^4.0",
         "symfony/config": "^3.4 || ^4.0",
         "symfony/dependency-injection": "^3.4 || ^4.0",
         "symfony/form": "^3.4 || ^4.0",
@@ -40,10 +38,7 @@
         "friendsofphp/php-cs-fixer": "^2.14",
         "symfony/framework-bundle": "^3.4 || ^4.0",
         "symfony/phpunit-bridge": "^3.4 || ^4.1",
-        "symfony/twig-bundle": "^3.4 || ^4.0",
-        "twig/twig": "^1.35 || ^2.0",
-        "symfony/web-link": "^3.4 || ^4.0",
-        "fig/link-util": "^1.0"
+        "symfony/twig-bundle": "^3.4 || ^4.0"
     },
     "scripts": {
         "cs-fixer": "vendor/bin/php-cs-fixer fix -v --dry-run",
