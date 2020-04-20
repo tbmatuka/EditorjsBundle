@@ -31,14 +31,12 @@
         "symfony/options-resolver": "^4.0",
         "symfony/property-access": "^4.0",
         "symfony/routing": "^4.0",
-        "symfony/twig-bundle": "^4.0",
-        "twig/twig": "^2.0"
+        "symfony/twig-bundle": "^4.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.14",
         "symfony/framework-bundle": "^4.0",
-        "symfony/phpunit-bridge": "^4.1",
-        "symfony/twig-bundle": "^4.0"
+        "symfony/phpunit-bridge": "^4.1"
     },
     "scripts": {
         "cs-fixer": "vendor/bin/php-cs-fixer fix -v --dry-run",
