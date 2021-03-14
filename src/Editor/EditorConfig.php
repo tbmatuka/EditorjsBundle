@@ -100,6 +100,11 @@ class EditorConfig
         $this->logLevel = $logLevel;
     }
 
+    public function __toString(): string
+    {
+        return$this->getName();
+    }
+
     public function getName(): string
     {
         return $this->name;
