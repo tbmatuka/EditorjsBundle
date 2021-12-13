@@ -7,7 +7,7 @@ use Tbmatuka\EditorjsBundle\DependencyInjection\TbmatukaEditorjsExtension;
 
 class TbmatukaEditorjsBundle extends Bundle
 {
-    public function getContainerExtension()
+    public function getContainerExtension(): ?ExtensionInterface
     {
         return new TbmatukaEditorjsExtension();
     }
