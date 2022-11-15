@@ -37,6 +37,7 @@ class TbmatukaEditorjsExtension extends Extension
                 'inlineToolbar',
                 'toolbox',
                 'config',
+                'tunes',
             ];
 
             foreach ($config['tools'] as $toolName => $toolConfig) {

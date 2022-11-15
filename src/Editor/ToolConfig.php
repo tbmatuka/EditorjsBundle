@@ -40,6 +40,11 @@ class ToolConfig
     private $config = [];
 
     /**
+     * @var array
+     */
+    private $tunes = [];
+
+    /**
      * @param bool|array|null|mixed $inlineToolbar
      */
     public function __construct(
@@ -49,7 +54,8 @@ class ToolConfig
         ?string $shortcut = null,
         $inlineToolbar = null,
         ?array $toolbox = [],
-        ?array $config = []
+        ?array $config = [],
+        ?array $tunes = []
     ) {
         $this->name = $name;
         $this->className = $className;
@@ -75,6 +81,10 @@ class ToolConfig
 
         if (is_array($config)) {
             $this->config = $config;
+        }
+
+        if (is_array($tunes)) {
+            $this->tunes = $tunes;
         }
     }
 
@@ -114,5 +124,10 @@ class ToolConfig
     public function getConfig(): array
     {
         return $this->config;
+    }
+
+    public function getTunes(): array
+    {
+        return $this->tunes;
     }
 }
